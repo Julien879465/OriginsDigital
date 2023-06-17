@@ -23,7 +23,7 @@ router.delete("/items/:id", itemControllers.destroy);
 router.get("/videos", videoControllers.browseByCategory);
 router.get("/videos/:id", videoControllers.readVideoById);
 router.put("/videos/:id", videoControllers.edit);
-router.post("/videos", videoControllers.add);
+router.post("/add-videos", videoControllers.add);
 router.delete("/videos/:id", videoControllers.destroy);
 
 router.put("/sign-up", userControllers.updateUser);
@@ -31,6 +31,7 @@ router.post("/sign-up", hashingPassword, userControllers.addUser);
 
 router.post("/sign-in", login);
 router.get("/profile", authorization, userControllers.getOneUser);
+
 router.get("/log-out", logout, userControllers.getUserByEmail);
 router.delete("/account-delete", userControllers.deleteUser);
 router.get("/admin", rolesCheck, userControllers.getUserByEmail);
