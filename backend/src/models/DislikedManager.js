@@ -18,5 +18,12 @@ class DislikedManager extends AbstractManager {
       [videoId]
     );
   }
+
+  findOne(userId, videoId) {
+    return this.database.query(
+      `SELECT * FROM ${this.table} WHERE ${this.table}.user_id = ? and ${this.table}.video_id = ?`,
+      [userId, videoId]
+    );
+  }
 }
 module.exports = DislikedManager;

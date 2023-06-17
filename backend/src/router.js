@@ -54,6 +54,7 @@ router.put("/favorites/:id", favoriteControllers.edit);
 router.post("/favorites", favoriteControllers.add);
 router.delete("/favorites/:id", authorization, favoriteControllers.destroy);
 
+router.get("/liked", likedControllers.get);
 router.post("/liked", likedControllers.add);
 router.delete("/liked/:id", likedControllers.destroy);
 
