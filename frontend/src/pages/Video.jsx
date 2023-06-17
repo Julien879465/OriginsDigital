@@ -36,6 +36,20 @@ function Video() {
       .catch((error) => console.error(error));
   };
 
+  const onPressAddLiked = () => {
+    instanceAxios.post(`/liked`, {
+      user_id: userId,
+      video_id: video.id,
+    });
+  };
+
+  const onPressAddDisliked = () => {
+    instanceAxios.post(`/disliked`, {
+      user_id: userId,
+      video_id: video.id,
+    });
+  };
+
   useEffect(() => {
     instanceAxios.get(`/profile`).then((response) => {
       const userData = response.data;
@@ -90,7 +104,7 @@ function Video() {
             color="#ffffff"
             height="30px"
             width="40px"
-            onClick={() => setLikeCount(likeCount + 1)}
+            onClick={() => onPressAddLiked(video.id)}
             className={styles.like}
           />
           <span className={styles.likeCount}>{likeCount}</span>
@@ -98,7 +112,7 @@ function Video() {
             color="#ffffff"
             height="30px"
             width="40px"
-            onClick={() => setDislikeCount(dislikeCount + 1)}
+            onClick={() => onPressAddDisliked(video.id)}
             className={styles.dislike}
           />
           <span className={styles.likeCount}>{dislikeCount}</span>

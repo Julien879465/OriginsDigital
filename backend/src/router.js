@@ -13,6 +13,8 @@ const categoryControllers = require("./controllers/categoryControllers");
 const authorization = require("./middleware/authorization");
 const userControllers = require("./controllers/userControllers");
 const avatarController = require("./controllers/avatarController");
+const likedControllers = require("./controllers/likedControllers");
+const dislikedControllers = require("./controllers/dislikedControllers");
 
 router.get("/items", itemControllers.browse);
 router.get("/items/:id", itemControllers.read);
@@ -51,5 +53,11 @@ router.get("/favorites/:id", favoriteControllers.read);
 router.put("/favorites/:id", favoriteControllers.edit);
 router.post("/favorites", favoriteControllers.add);
 router.delete("/favorites/:id", authorization, favoriteControllers.destroy);
+
+router.post("/liked", likedControllers.add);
+router.delete("/liked/:id", likedControllers.destroy);
+
+router.post("/disliked", dislikedControllers.add);
+router.delete("/disliked/:id", dislikedControllers.destroy);
 
 module.exports = router;
