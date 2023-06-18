@@ -47,6 +47,45 @@ const edit = (req, res) => {
       res.sendStatus(500);
     });
 };
+const editLikes = (req, res) => {
+  const video = req.body;
+
+  video.id = parseInt(req.params.id, 10);
+
+  models.video
+    .updateLikes(video)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const editDislikes = (req, res) => {
+  const video = req.body;
+
+  video.id = parseInt(req.params.id, 10);
+
+  models.video
+    .updateDislikes(video)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 const add = (req, res) => {
   const video = req.body;
@@ -118,4 +157,6 @@ module.exports = {
   destroy,
   browseByCategory,
   readVideoById,
+  editLikes,
+  editDislikes,
 };

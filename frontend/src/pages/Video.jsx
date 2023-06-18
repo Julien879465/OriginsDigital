@@ -46,11 +46,13 @@ function Video() {
           user_id: userId,
           video_id: video.id,
         });
+        instanceAxios.put(`/videos/${id}`, { likes: likeCount + 1 });
       } else {
         instanceAxios.delete(`/liked/${id}`, {
           user_id: userId,
           video_id: video.id,
         });
+        instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
       }
       instanceAxios.get(`/disliked`).then((responseDisliked) => {
         const resDisliked = responseDisliked.data.filter(
@@ -60,6 +62,9 @@ function Video() {
           instanceAxios.delete(`/disliked/${id}`, {
             user_id: userId,
             video_id: video.id,
+          });
+          instanceAxios.put(`/videos/${id}/dislikes`, {
+            dislikes: dislikeCount - 1,
           });
         }
       });
@@ -76,10 +81,16 @@ function Video() {
           user_id: userId,
           video_id: video.id,
         });
+        instanceAxios.put(`/videos/${id}/dislikes`, {
+          dislikes: dislikeCount + 1,
+        });
       } else {
         instanceAxios.delete(`/disliked/${id}`, {
           user_id: userId,
           video_id: video.id,
+        });
+        instanceAxios.put(`/videos/${id}/dislikes`, {
+          dislikes: dislikeCount - 1,
         });
       }
       instanceAxios.get(`/liked`).then((responseliked) => {
@@ -91,6 +102,7 @@ function Video() {
             user_id: userId,
             video_id: video.id,
           });
+          instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
         }
       });
     });

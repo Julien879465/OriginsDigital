@@ -28,6 +28,20 @@ class VideoManager extends AbstractManager {
     );
   }
 
+  updateLikes(video) {
+    return this.database.query(
+      `update ${this.table} set likes = ? where id = ?`,
+      [video.likes, video.id]
+    );
+  }
+
+  updateDislikes(video) {
+    return this.database.query(
+      `update ${this.table} set dislikes = ? where id = ?`,
+      [video.dislikes, video.id]
+    );
+  }
+
   findAllByCategory() {
     return this.database.query(
       `select ${this.table}.*, c.name AS category_name from ${this.table} JOIN category AS c ON ${this.table}.category_id = c.id`

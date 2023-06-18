@@ -24,7 +24,8 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/videos", videoControllers.browseByCategory);
 router.get("/videos/:id", videoControllers.readVideoById);
-router.put("/videos/:id", videoControllers.edit);
+router.put("/videos/:id", videoControllers.editLikes);
+router.put("/videos/:id/dislikes", videoControllers.editDislikes);
 router.post("/add-videos", videoControllers.add);
 router.delete("/videos/:id", videoControllers.destroy);
 
