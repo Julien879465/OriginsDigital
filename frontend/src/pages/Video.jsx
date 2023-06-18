@@ -52,6 +52,17 @@ function Video() {
           video_id: video.id,
         });
       }
+      instanceAxios.get(`/disliked`).then((responseDisliked) => {
+        const resDisliked = responseDisliked.data.filter(
+          (elem) => elem.user_id === userId && elem.video_id === video.id
+        );
+        if (resDisliked.length !== 0) {
+          instanceAxios.delete(`/disliked/${id}`, {
+            user_id: userId,
+            video_id: video.id,
+          });
+        }
+      });
     });
   };
 
@@ -71,9 +82,19 @@ function Video() {
           video_id: video.id,
         });
       }
+      instanceAxios.get(`/liked`).then((responseliked) => {
+        const resLiked = responseliked.data.filter(
+          (elem) => elem.user_id === userId && elem.video_id === video.id
+        );
+        if (resLiked.length !== 0) {
+          instanceAxios.delete(`/liked/${id}`, {
+            user_id: userId,
+            video_id: video.id,
+          });
+        }
+      });
     });
   };
-
   useEffect(() => {
     instanceAxios.get(`/profile`).then((response) => {
       const userData = response.data;
