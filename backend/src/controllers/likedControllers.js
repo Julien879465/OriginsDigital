@@ -30,17 +30,11 @@ const destroy = (req, res) => {
     });
 };
 
-const get = (req, res) => {
-  const userId = req.body.user_id;
-  const videoId = req.body.video_id;
+const browse = (req, res) => {
   models.liked
-    .findOne(userId, videoId)
-    .then(([result]) => {
-      if (result.length) {
-        res.json(result[0]);
-      } else {
-        res.sendStatus(404);
-      }
+    .findAll()
+    .then(([rows]) => {
+      res.send(rows);
     })
     .catch((err) => {
       console.error(err);
@@ -48,4 +42,4 @@ const get = (req, res) => {
     });
 };
 
-module.exports = { add, destroy, get };
+module.exports = { add, destroy, browse };

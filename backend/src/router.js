@@ -54,11 +54,10 @@ router.put("/favorites/:id", favoriteControllers.edit);
 router.post("/favorites", favoriteControllers.add);
 router.delete("/favorites/:id", authorization, favoriteControllers.destroy);
 
-router.get("/liked", likedControllers.get);
+router.get("/liked", likedControllers.browse);
 router.post("/liked", likedControllers.add);
 router.delete("/liked/:id", likedControllers.destroy);
 
-router.get("/disliked", dislikedControllers.get);
 router.post("/disliked", dislikedControllers.add);
 router.delete("/disliked/:id", dislikedControllers.destroy);
 

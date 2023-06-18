@@ -37,9 +37,21 @@ function Video() {
   };
 
   const onPressAddLiked = () => {
-    instanceAxios.post(`/liked`, {
-      user_id: userId,
-      video_id: video.id,
+    instanceAxios.get(`/liked`).then((response) => {
+      const res = response.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length === 0) {
+        instanceAxios.post(`/liked`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+      } else {
+        instanceAxios.delete(`/liked/${id}`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+      }
     });
   };
 
@@ -104,7 +116,7 @@ function Video() {
             color="#ffffff"
             height="30px"
             width="40px"
-            onClick={() => onPressAddLiked(video.id)}
+            onClick={() => onPressAddLiked(userId, video.id)}
             className={styles.like}
           />
           <span className={styles.likeCount}>{likeCount}</span>

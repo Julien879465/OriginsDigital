@@ -30,22 +30,4 @@ const destroy = (req, res) => {
     });
 };
 
-const get = (req, res) => {
-  const userId = req.body.user_id;
-  const videoId = req.body.video_id;
-  models.disliked
-    .findOne(userId, videoId)
-    .then(([result]) => {
-      if (result.length) {
-        res.json(result[0]);
-      } else {
-        res.sendStatus(404);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-module.exports = { add, destroy, get };
+module.exports = { add, destroy };
