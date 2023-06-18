@@ -18,5 +18,9 @@ class DislikedManager extends AbstractManager {
       [videoId]
     );
   }
+
+  findAll() {
+    return this.database.query(`SELECT * FROM ${this.table}`);
+  }
 }
 module.exports = DislikedManager;

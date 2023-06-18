@@ -56,9 +56,21 @@ function Video() {
   };
 
   const onPressAddDisliked = () => {
-    instanceAxios.post(`/disliked`, {
-      user_id: userId,
-      video_id: video.id,
+    instanceAxios.get(`/disliked`).then((response) => {
+      const res = response.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length === 0) {
+        instanceAxios.post(`/disliked`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+      } else {
+        instanceAxios.delete(`/disliked/${id}`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+      }
     });
   };
 

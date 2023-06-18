@@ -58,6 +58,7 @@ router.get("/liked", likedControllers.browse);
 router.post("/liked", likedControllers.add);
 router.delete("/liked/:id", likedControllers.destroy);
 
+router.get("/disliked", dislikedControllers.browse);
 router.post("/disliked", dislikedControllers.add);
 router.delete("/disliked/:id", dislikedControllers.destroy);
 
