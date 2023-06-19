@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import {
+  ThumbsUp,
+  ThumbsDown,
   ThumbsUpOutline,
   ThumbsDownOutline,
   BookmarkOutline,
   Bookmark,
 } from "react-ionicons";
 import { useSignInContext } from "../contexts/SignInContext";
-import { useFavoriteContext } from "../contexts/FavoriteContext";
 import instanceAxios from "../services/instanceAxios";
 
 import styles from "../styles/Video.module.scss";
@@ -17,23 +18,81 @@ function Video() {
   const { userId, setUserId } = useSignInContext();
   const [likeCount, setLikeCount] = useState(0);
   const [dislikeCount, setDislikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState();
+  const [isDisliked, setIsDisliked] = useState();
   const { id } = useParams();
-  const parsedId = parseInt(id, 10);
   const [video, setVideo] = useState({});
-  const { favorites, setFavorites } = useFavoriteContext();
+  const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
 
-  const onPressAdd = () => {
-    instanceAxios.post(`/favorites`, {
-      user_id: userId,
-      video_id: video.id,
+  useEffect(() => {
+    instanceAxios.get(`/profile`).then((response) => {
+      const userData = response.data;
+      setUserId(userData.id);
+      instanceAxios
+        .get(`/videos/${id}`)
+        .then((res) => res.data)
+        .then((data) => {
+          setVideo(data);
+          setLikeCount(data.likes);
+          setDislikeCount(data.dislikes);
+        });
     });
-  };
+  }, [userId, video.id, isLiked, isDisliked]);
 
-  const onPressDelete = () => {
-    instanceAxios
-      .delete(`/favorites/${id}`)
-      .catch((error) => console.error(error));
+  useEffect(() => {
+    instanceAxios.get(`/liked`).then((resLiked) => {
+      const res = resLiked.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length !== 0) {
+        setIsLiked(true);
+        setIsDisliked(false);
+      }
+    });
+    instanceAxios.get(`/disliked`).then((resDisliked) => {
+      const res = resDisliked.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length !== 0) {
+        setIsLiked(false);
+        setIsDisliked(true);
+      }
+    });
+  }, [userId, video.id, isLiked, isDisliked]);
+
+  useEffect(() => {
+    instanceAxios.get(`/favorites`).then((resFav) => {
+      const res = resFav.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length !== 0) {
+        setIsFavorite(true);
+      } else {
+        setIsFavorite(false);
+      }
+    });
+  }, [userId, video.id, isFavorite]);
+
+  const onPressAdd = () => {
+    instanceAxios.get(`/favorites`).then((response) => {
+      const res = response.data.filter(
+        (elem) => elem.user_id === userId && elem.video_id === video.id
+      );
+      if (res.length === 0) {
+        instanceAxios.post(`/favorites`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+        setIsFavorite(true);
+      } else {
+        instanceAxios.delete(`/favorites/${id}`, {
+          user_id: userId,
+          video_id: video.id,
+        });
+        setIsFavorite(false);
+      }
+    });
   };
 
   const onPressAddLiked = () => {
@@ -47,12 +106,15 @@ function Video() {
           video_id: video.id,
         });
         instanceAxios.put(`/videos/${id}`, { likes: likeCount + 1 });
+        setIsLiked(true);
+        setIsDisliked(false);
       } else {
         instanceAxios.delete(`/liked/${id}`, {
           user_id: userId,
           video_id: video.id,
         });
         instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
+        setIsLiked(false);
       }
       instanceAxios.get(`/disliked`).then((responseDisliked) => {
         const resDisliked = responseDisliked.data.filter(
@@ -66,6 +128,7 @@ function Video() {
           instanceAxios.put(`/videos/${id}/dislikes`, {
             dislikes: dislikeCount - 1,
           });
+          setIsDisliked(false);
         }
       });
     });
@@ -84,6 +147,8 @@ function Video() {
         instanceAxios.put(`/videos/${id}/dislikes`, {
           dislikes: dislikeCount + 1,
         });
+        setIsDisliked(true);
+        setIsLiked(false);
       } else {
         instanceAxios.delete(`/disliked/${id}`, {
           user_id: userId,
@@ -92,6 +157,7 @@ function Video() {
         instanceAxios.put(`/videos/${id}/dislikes`, {
           dislikes: dislikeCount - 1,
         });
+        setIsDisliked(false);
       }
       instanceAxios.get(`/liked`).then((responseliked) => {
         const resLiked = responseliked.data.filter(
@@ -103,31 +169,11 @@ function Video() {
             video_id: video.id,
           });
           instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
+          setIsLiked(false);
         }
       });
     });
   };
-  useEffect(() => {
-    instanceAxios.get(`/profile`).then((response) => {
-      const userData = response.data;
-      setUserId(userData.id);
-      instanceAxios
-        .get(`${import.meta.env.VITE_BACKEND_URL}/videos/${id}`)
-        .then((res) => res.data)
-        .then((data) => {
-          setVideo(data);
-          setLikeCount(data.likes);
-          setDislikeCount(data.dislikes);
-        });
-      instanceAxios
-        .get(`/favorites`)
-        .then((res) => res.data)
-        .then((data) => {
-          const userFav = data.filter((fav) => fav.user_id === userId);
-          setFavorites(userFav);
-        });
-    });
-  }, [favorites]);
 
   const onPressCategory = (e) => {
     const category = e.target.textContent;
@@ -157,31 +203,51 @@ function Video() {
       <h2 className={styles.videotitle}>{video.title}</h2>
       <div className={styles.boxlike}>
         <div className={styles.likes}>
-          <ThumbsUpOutline
-            color="#ffffff"
-            height="30px"
-            width="40px"
-            onClick={() => onPressAddLiked(userId, video.id)}
-            className={styles.like}
-          />
+          {isLiked ? (
+            <ThumbsUp
+              color="#ffffff"
+              height="30px"
+              width="40px"
+              onClick={() => onPressAddLiked(userId, video.id)}
+              className={styles.like}
+            />
+          ) : (
+            <ThumbsUpOutline
+              color="#ffffff"
+              height="30px"
+              width="40px"
+              onClick={() => onPressAddLiked(userId, video.id)}
+              className={styles.like}
+            />
+          )}
           <span className={styles.likeCount}>{likeCount}</span>
-          <ThumbsDownOutline
-            color="#ffffff"
-            height="30px"
-            width="40px"
-            onClick={() => onPressAddDisliked(video.id)}
-            className={styles.dislike}
-          />
+          {isDisliked ? (
+            <ThumbsDown
+              color="#ffffff"
+              height="30px"
+              width="40px"
+              onClick={() => onPressAddDisliked(userId, video.id)}
+              className={styles.dislike}
+            />
+          ) : (
+            <ThumbsDownOutline
+              color="#ffffff"
+              height="30px"
+              width="40px"
+              onClick={() => onPressAddDisliked(userId, video.id)}
+              className={styles.dislike}
+            />
+          )}
           <span className={styles.likeCount}>{dislikeCount}</span>
         </div>
         <div className={styles.favories}>
-          {favorites.some((elem) => elem.video_id === parsedId) ? (
+          {isFavorite ? (
             <Bookmark
               color="#ffffff"
               height="35px"
               width="35px"
               className={styles.favorite}
-              onClick={() => onPressDelete(video.id)}
+              onClick={() => onPressAdd(userId, video.id)}
             />
           ) : (
             <BookmarkOutline
@@ -189,7 +255,7 @@ function Video() {
               height="35px"
               width="35px"
               className={styles.favorite}
-              onClick={() => onPressAdd(userId, video)}
+              onClick={() => onPressAdd(userId, video.id)}
             />
           )}
         </div>
