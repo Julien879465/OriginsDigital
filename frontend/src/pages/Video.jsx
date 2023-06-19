@@ -191,85 +191,106 @@ function Video() {
   };
 
   return (
-    <div className={styles.contvid}>
-      <div className={styles.videobox}>
-        <ReactPlayer
-          controls
-          className={styles.video}
-          url={video.url}
-          height="100%"
-          width="100%"
-        />
-      </div>
-      <button
-        type="button"
-        className={styles.catbtn}
-        onClick={(e) => onPressCategory(e)}
-        onKeyDown={(e) => onPressCategory(e)}
-      >
-        <h3 className={styles.cattitle}>{video.category_name}</h3>
-      </button>
-      <h2 className={styles.videotitle}>{video.title}</h2>
-      <div className={styles.boxlike}>
-        <div className={styles.likes}>
-          {isLiked ? (
-            <ThumbsUp
-              color="#ffffff"
-              height="30px"
-              width="40px"
-              onClick={() => onPressAddLiked(userId, video.id)}
-              className={styles.like}
+    <div>
+      {userId ? (
+        <div className={styles.contvid}>
+          <div>You must sign in to see videos</div>
+          <div className={styles.videobox}>
+            <ReactPlayer
+              controls
+              className={styles.video}
+              url={video.url}
+              height="100%"
+              width="100%"
             />
-          ) : (
-            <ThumbsUpOutline
-              color="#ffffff"
-              height="30px"
-              width="40px"
-              onClick={() => onPressAddLiked(userId, video.id)}
-              className={styles.like}
-            />
-          )}
-          <span className={styles.likeCount}>{likeCount}</span>
-          {isDisliked ? (
-            <ThumbsDown
-              color="#ffffff"
-              height="30px"
-              width="40px"
-              onClick={() => onPressAddDisliked(userId, video.id)}
-              className={styles.dislike}
-            />
-          ) : (
-            <ThumbsDownOutline
-              color="#ffffff"
-              height="30px"
-              width="40px"
-              onClick={() => onPressAddDisliked(userId, video.id)}
-              className={styles.dislike}
-            />
-          )}
-          <span className={styles.likeCount}>{dislikeCount}</span>
+          </div>
+          <button
+            type="button"
+            className={styles.catbtn}
+            onClick={(e) => onPressCategory(e)}
+            onKeyDown={(e) => onPressCategory(e)}
+          >
+            <h3 className={styles.cattitle}>{video.category_name}</h3>
+          </button>
+          <h2 className={styles.videotitle}>{video.title}</h2>
+          <div className={styles.boxlike}>
+            <div className={styles.likes}>
+              {isLiked ? (
+                <ThumbsUp
+                  color="#ffffff"
+                  height="30px"
+                  width="40px"
+                  onClick={() => onPressAddLiked(userId, video.id)}
+                  className={styles.like}
+                />
+              ) : (
+                <ThumbsUpOutline
+                  color="#ffffff"
+                  height="30px"
+                  width="40px"
+                  onClick={() => onPressAddLiked(userId, video.id)}
+                  className={styles.like}
+                />
+              )}
+              <span className={styles.likeCount}>{likeCount}</span>
+              {isDisliked ? (
+                <ThumbsDown
+                  color="#ffffff"
+                  height="30px"
+                  width="40px"
+                  onClick={() => onPressAddDisliked(userId, video.id)}
+                  className={styles.dislike}
+                />
+              ) : (
+                <ThumbsDownOutline
+                  color="#ffffff"
+                  height="30px"
+                  width="40px"
+                  onClick={() => onPressAddDisliked(userId, video.id)}
+                  className={styles.dislike}
+                />
+              )}
+              <span className={styles.likeCount}>{dislikeCount}</span>
+            </div>
+            <div className={styles.favories}>
+              {isFavorite ? (
+                <Bookmark
+                  color="#ffffff"
+                  height="35px"
+                  width="35px"
+                  className={styles.favorite}
+                  onClick={() => onPressAdd(userId, video.id)}
+                />
+              ) : (
+                <BookmarkOutline
+                  color="#ffffff"
+                  height="35px"
+                  width="35px"
+                  className={styles.favorite}
+                  onClick={() => onPressAdd(userId, video.id)}
+                />
+              )}
+            </div>
+          </div>
+          <p className={styles.descvid}>{video.description}</p>
         </div>
-        <div className={styles.favories}>
-          {isFavorite ? (
-            <Bookmark
-              color="#ffffff"
-              height="35px"
-              width="35px"
-              className={styles.favorite}
-              onClick={() => onPressAdd(userId, video.id)}
-            />
-          ) : (
-            <BookmarkOutline
-              color="#ffffff"
-              height="35px"
-              width="35px"
-              className={styles.favorite}
-              onClick={() => onPressAdd(userId, video.id)}
-            />
-          )}
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: `calc(100vh - 5rem)`,
+            fontSize: "50px",
+            ...(window.innerWidth <= 993 && {
+              fontSize: "30px",
+              textAlign: "center",
+            }),
+          }}
+        >
+          You must sign in to see videos
         </div>
-      </div>
-      <p className={styles.descvid}>{video.description}</p>
+      )}
     </div>
   );
 }
