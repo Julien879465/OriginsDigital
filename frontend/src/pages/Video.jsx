@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
+import { toast } from "react-toastify";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -85,12 +86,14 @@ function Video() {
           video_id: video.id,
         });
         setIsFavorite(true);
+        toast.success("Video added to favorites!");
       } else {
         instanceAxios.delete(`/favorites/${id}`, {
           user_id: userId,
           video_id: video.id,
         });
         setIsFavorite(false);
+        toast.warning("Video removed from favorites!");
       }
     });
   };
@@ -108,6 +111,7 @@ function Video() {
         instanceAxios.put(`/videos/${id}`, { likes: likeCount + 1 });
         setIsLiked(true);
         setIsDisliked(false);
+        toast.success("Like sent!");
       } else {
         instanceAxios.delete(`/liked/${id}`, {
           user_id: userId,
@@ -115,6 +119,7 @@ function Video() {
         });
         instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
         setIsLiked(false);
+        toast.success("Like removed!");
       }
       instanceAxios.get(`/disliked`).then((responseDisliked) => {
         const resDisliked = responseDisliked.data.filter(
@@ -129,6 +134,7 @@ function Video() {
             dislikes: dislikeCount - 1,
           });
           setIsDisliked(false);
+          toast.success("Dislike removed!");
         }
       });
     });
@@ -149,6 +155,7 @@ function Video() {
         });
         setIsDisliked(true);
         setIsLiked(false);
+        toast.success("Dislike sent!");
       } else {
         instanceAxios.delete(`/disliked/${id}`, {
           user_id: userId,
@@ -158,6 +165,7 @@ function Video() {
           dislikes: dislikeCount - 1,
         });
         setIsDisliked(false);
+        toast.success("Dislike removed!");
       }
       instanceAxios.get(`/liked`).then((responseliked) => {
         const resLiked = responseliked.data.filter(
@@ -170,6 +178,7 @@ function Video() {
           });
           instanceAxios.put(`/videos/${id}`, { likes: likeCount - 1 });
           setIsLiked(false);
+          toast.success("Like removed!");
         }
       });
     });

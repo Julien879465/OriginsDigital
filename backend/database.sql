@@ -103,6 +103,10 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 37
 DEFAULT CHARACTER SET = utf8mb4;
 
+ALTER TABLE `origins_digital`.`video` 
+CHANGE COLUMN `likes` `likes` INT UNSIGNED NOT NULL DEFAULT '0' ,
+CHANGE COLUMN `dislikes` `dislikes` INT UNSIGNED NOT NULL DEFAULT '0' ;
+
 INSERT INTO video VALUES
 (1, 'What Is ReactJS ?',"In this React js Tutorial video, we learn all about ReactJS, it's features and some basic concepts required to build a React Application.", 'https://i.ytimg.com/vi/Y6aYx_KKM7A/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD5mNY27Tb_awlkrSyKCoLz2XBkQA', '00:09:29', TRUE, 2, 0, 0, 'Simplilearn', 'https://www.youtube.com/watch?v=Y6aYx_KKM7A'),
 (2, 'What Is Javascript ?', 'What is JavaScript? This short video explains it in 5 minutes.', 'https://i.ytimg.com/vi/upDLs1sn7g4/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLCFv9L3db-LCm6514So6r8E0-0cpg', '00:05:11', TRUE, 3, 0, 0, 'Programming with Mosh', 'https://www.youtube.com/watch?v=upDLs1sn7g4'),
