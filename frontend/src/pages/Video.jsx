@@ -191,10 +191,15 @@ function Video() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {userId ? (
         <div className={styles.contvid}>
-          <div>You must sign in to see videos</div>
           <div className={styles.videobox}>
             <ReactPlayer
               controls
