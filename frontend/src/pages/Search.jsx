@@ -6,7 +6,6 @@ import styles from "../styles/Search.module.scss";
 
 export default function Search() {
   const [videos, setVideos] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("");
   const [videosFound, setVideosFound] = useState(true);
 
@@ -29,12 +28,6 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    if (searchValue !== "") {
-      setSelectedFilter("");
-    }
-  }, [searchValue]);
-
-  useEffect(() => {
     if (selectedFilter !== "") {
       const filteredVideos = videos.filter(
         (video) => video.category_name === selectedFilter
@@ -45,12 +38,6 @@ export default function Search() {
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Search"
-        onChange={(e) => setSearchValue(e.target.value)}
-        className={styles["search-bar"]}
-      />
       <select
         name="filters"
         value={selectedFilter}
@@ -76,54 +63,35 @@ export default function Search() {
           !videosFound && styles["no-videos-found"]
         }`}
       >
-        {searchValue !== "" ? (
-          videos
-            .filter((video) =>
-              video.category_name
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
-            )
-            .map((vid) => (
-              <div key={vid.title} className={styles.imgContainer}>
-                <NavLink key={vid.id} to={`/videos/${vid.id}`}>
-                  <img key={vid.id} src={vid.thumbnail} alt={vid.description} />
-                  <p>{vid.title}</p>
-                </NavLink>
-              </div>
-            ))
-        ) : (
+        {!selectedFilter && (
+          <h1 className={styles.browse}>Select a category</h1>
+        )}
+        {selectedFilter !== "" && (
           <>
-            {!selectedFilter && (
-              <h1 className={styles.browse}>Select a category</h1>
+            <h1 className={styles.browse}>Browse {selectedFilter}</h1>
+            {!videosFound && (
+              <div>
+                <h1>No videos found in the selected category.</h1>
+              </div>
             )}
-            {selectedFilter !== "" && (
-              <>
-                <h1 className={styles.browse}>Browse {selectedFilter}</h1>
-                {!videosFound && (
-                  <div>
-                    <h1>No videos found in the selected category.</h1>
-                  </div>
-                )}
-                {videos
-                  .filter((video) => video.category_name === selectedFilter)
-                  .map((video) => (
-                    <div key={video.title} className={styles.imgContainer}>
-                      <NavLink
-                        key={video.id}
-                        to={`/videos/${video.id}`}
-                        className={styles["navlink-thumbnail"]}
-                      >
-                        <img
-                          key={video.id}
-                          src={video.thumbnail}
-                          alt={video.description}
-                        />
-                        <p className={styles.title}>{video.title}</p>
-                      </NavLink>
-                    </div>
-                  ))}
-              </>
-            )}
+            {videos
+              .filter((video) => video.category_name === selectedFilter)
+              .map((video) => (
+                <div key={video.title} className={styles.imgContainer}>
+                  <NavLink
+                    key={video.id}
+                    to={`/videos/${video.id}`}
+                    className={styles["navlink-thumbnail"]}
+                  >
+                    <img
+                      key={video.id}
+                      src={video.thumbnail}
+                      alt={video.description}
+                    />
+                    <p className={styles.title}>{video.title}</p>
+                  </NavLink>
+                </div>
+              ))}
           </>
         )}
       </div>
