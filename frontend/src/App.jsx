@@ -96,7 +96,7 @@ function App() {
         <Route path="/manage-video" element={<ManageVideo />} />
         <Route path="/add-pages" element={<AddPages />} />
       </Routes>
-      <ToastContainer theme="dark" />
+      <ToastContainer theme="dark" autoClose={2000} />
       <Navbar />
       {location.pathname !== "/sign-up" && location.pathname !== "/sign-in" && (
         <Footer />
