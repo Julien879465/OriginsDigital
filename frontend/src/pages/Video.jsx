@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { toast } from "react-toastify";
 import {
@@ -288,7 +288,15 @@ function Video() {
             }),
           }}
         >
-          You must sign in to see videos
+          You must<span>&nbsp;</span>
+          <Link
+            to="/sign-in"
+            style={{ textDecoration: "none", color: "#ff7402" }}
+          >
+            sign in
+          </Link>
+          <span>&nbsp;</span>
+          to see videos
         </div>
       )}
     </div>
