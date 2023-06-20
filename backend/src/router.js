@@ -13,6 +13,8 @@ const categoryControllers = require("./controllers/categoryControllers");
 const authorization = require("./middleware/authorization");
 const userControllers = require("./controllers/userControllers");
 const avatarController = require("./controllers/avatarController");
+const likedControllers = require("./controllers/likedControllers");
+const dislikedControllers = require("./controllers/dislikedControllers");
 
 router.get("/items", itemControllers.browse);
 router.get("/items/:id", itemControllers.read);
@@ -22,7 +24,8 @@ router.delete("/items/:id", itemControllers.destroy);
 
 router.get("/videos", videoControllers.browseByCategory);
 router.get("/videos/:id", videoControllers.readVideoById);
-router.put("/videos/:id", videoControllers.edit);
+router.put("/videos/:id", videoControllers.editLikes);
+router.put("/videos/:id/dislikes", videoControllers.editDislikes);
 router.post("/add-videos", videoControllers.add);
 router.delete("/videos/:id", videoControllers.destroy);
 
@@ -51,5 +54,13 @@ router.get("/favorites/:id", favoriteControllers.read);
 router.put("/favorites/:id", favoriteControllers.edit);
 router.post("/favorites", favoriteControllers.add);
 router.delete("/favorites/:id", authorization, favoriteControllers.destroy);
+
+router.get("/liked", likedControllers.browse);
+router.post("/liked", likedControllers.add);
+router.delete("/liked/:id", likedControllers.destroy);
+
+router.get("/disliked", dislikedControllers.browse);
+router.post("/disliked", dislikedControllers.add);
+router.delete("/disliked/:id", dislikedControllers.destroy);
 
 module.exports = router;
