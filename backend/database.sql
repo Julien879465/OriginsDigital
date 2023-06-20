@@ -103,6 +103,10 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 37
 DEFAULT CHARACTER SET = utf8mb4;
 
+ALTER TABLE `origins_digital`.`video` 
+CHANGE COLUMN `likes` `likes` INT UNSIGNED NOT NULL DEFAULT '0' ,
+CHANGE COLUMN `dislikes` `dislikes` INT UNSIGNED NOT NULL DEFAULT '0' ;
+
 INSERT INTO video VALUES
 (1, 'What Is ReactJS ?',"In this React js Tutorial video, we learn all about ReactJS, it's features and some basic concepts required to build a React Application.", 'https://i.ytimg.com/vi/Y6aYx_KKM7A/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD5mNY27Tb_awlkrSyKCoLz2XBkQA', '00:09:29', TRUE, 2, 0, 0, 'Simplilearn', 'https://www.youtube.com/watch?v=Y6aYx_KKM7A'),
 (2, 'What Is Javascript ?', 'What is JavaScript? This short video explains it in 5 minutes.', 'https://i.ytimg.com/vi/upDLs1sn7g4/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLCFv9L3db-LCm6514So6r8E0-0cpg', '00:05:11', TRUE, 3, 0, 0, 'Programming with Mosh', 'https://www.youtube.com/watch?v=upDLs1sn7g4'),
@@ -141,6 +145,45 @@ INSERT INTO video VALUES
 (35, 'PHP Array Data Type - Indexed, Associative & Multi-Dimensional Arrays - Full PHP 8 Tutorial', "In PHP you can have regular index-based arrays also known as indexed arrays, you could also have arrays with custom keys also known as associative arrays & can have arrays within arrays which are called multi-dimensional arrays.", 'https://img.youtube.com/vi/C8ZFLq24g_A/maxresdefault.jpg', '00:16:51', FALSE, 9, 0, 0, 'Program With Gio', 'https://www.youtube.com/watch?v=C8ZFLq24g_A&list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-&index=11'),
 (36, 'PHP Loops Tutorial - Break & Continue Statements - Full PHP 8 Tutorial', "Loops are simple but there are some important things that you need to be aware of when working with them, such as performance, things to be aware of when working with references, how to break out of nested loops, how to handle infinite loops & so on.", 'https://img.youtube.com/vi/NhXvpHB_PMQ/maxresdefault.jpg', '00:12:23', FALSE, 9, 0, 0, 'Program With Gio', 'https://www.youtube.com/watch?v=NhXvpHB_PMQ&list=PLr3d3QYzkw2xabQRUpcZ_IBk9W50M9pe-&index=17');
 
+-- -----------------------------------------------------
+-- Table `origins_digital`.`liked`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `origins_digital`.`liked` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `video_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_liked_video_idx` (`video_id` ASC) VISIBLE,
+  INDEX `fk_liked_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_liked_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `origins_digital`.`user` (`id`),
+  CONSTRAINT `fk_liked_video`
+    FOREIGN KEY (`video_id`)
+    REFERENCES `origins_digital`.`video` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
+-- Table `origins_digital`.`disliked`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `origins_digital`.`disliked` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `video_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_disliked_video1_idx` (`video_id` ASC) VISIBLE,
+  INDEX `fk_disliked_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_disliked_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `origins_digital`.`user` (`id`),
+  CONSTRAINT `fk_disliked_video1`
+    FOREIGN KEY (`video_id`)
+    REFERENCES `origins_digital`.`video` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `origins_digital`.`favorite`

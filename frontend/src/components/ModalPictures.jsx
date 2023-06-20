@@ -6,6 +6,8 @@ import instanceAxios from "../services/instanceAxios";
 import newLocal from "../styles/modal/modalPicturesStyles";
 import ImagesList from "./ImagesList";
 
+import styles from "../styles/Account.module.scss";
+
 function Modal({ isShowing, hide }) {
   const [currentUserAvatar, setCurrentUserAvatar] = useState("");
   const [selectedImage, setSelectedImage] = useState(0);
@@ -114,6 +116,18 @@ function Modal({ isShowing, hide }) {
                     url={url}
                     onImageClick={handleImageClick}
                   />
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <button
+                    type="button"
+                    className={styles["btn-apply"]}
+                    onClick={() => {
+                      hide();
+                      handleCloseClick();
+                    }}
+                  >
+                    Apply changes
+                  </button>
                 </div>
               </div>
             </div>

@@ -54,6 +54,16 @@ const FavoriteManager = require("./FavoriteManager");
 models.favorite = new FavoriteManager();
 models.favorite.setDatabase(pool);
 
+const LikedManager = require("./LikedManager");
+
+models.liked = new LikedManager();
+models.liked.setDatabase(pool);
+
+const DislikedManager = require("./DislikedManager");
+
+models.disliked = new DislikedManager();
+models.disliked.setDatabase(pool);
+
 const CategoryManager = require("./CategoryManager");
 
 models.category = new CategoryManager();

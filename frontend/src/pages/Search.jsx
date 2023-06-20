@@ -6,8 +6,8 @@ import styles from "../styles/Search.module.scss";
 
 export default function Search() {
   const [videos, setVideos] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [videosFound, setVideosFound] = useState(true);
 
   const [getCategoryParams] = useSearchParams();
   const categoryName = getCategoryParams.get("category-name");
@@ -28,19 +28,16 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    if (searchValue !== "") {
-      setSelectedFilter("");
+    if (selectedFilter !== "") {
+      const filteredVideos = videos.filter(
+        (video) => video.category_name === selectedFilter
+      );
+      setVideosFound(filteredVideos.length > 0);
     }
-  }, [searchValue]);
+  }, [selectedFilter, videos]);
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Search"
-        onChange={(e) => setSearchValue(e.target.value)}
-        className={styles["search-bar"]}
-      />
       <select
         name="filters"
         value={selectedFilter}
@@ -61,29 +58,21 @@ export default function Search() {
         <option value="SQL">SQL</option>
         <option value="NoSQL">NoSQL</option>
       </select>
-      <div className={styles.thumbnails}>
-        {searchValue !== "" ? (
-          videos
-            .filter((video) =>
-              video.category_name
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
-            )
-            .map((vid) => (
-              <div key={vid.title} className={styles.imgContainer}>
-                <NavLink key={vid.id} to={`/videos/${vid.id}`}>
-                  <img key={vid.id} src={vid.thumbnail} alt={vid.description} />
-                  <p>{vid.title}</p>
-                </NavLink>
-              </div>
-            ))
-        ) : (
+      <div
+        className={`${styles.thumbnails} ${
+          !videosFound && styles["no-videos-found"]
+        }`}
+      >
+        {!selectedFilter && (
+          <h1 className={styles.browse}>Select a category</h1>
+        )}
+        {selectedFilter !== "" && (
           <>
-            {!selectedFilter && (
-              <h1 className={styles.browse}>Select a category</h1>
-            )}
-            {selectedFilter !== "" && (
-              <h1 className={styles.browse}>Browse {selectedFilter}</h1>
+            <h1 className={styles.browse}>Browse {selectedFilter}</h1>
+            {!videosFound && (
+              <div>
+                <h1>No videos found in the selected category.</h1>
+              </div>
             )}
             {videos
               .filter((video) => video.category_name === selectedFilter)
