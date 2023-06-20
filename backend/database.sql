@@ -28,8 +28,27 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8mb4;
 
-INSERT INTO avatar VALUES
-(1, 'Black Cat', 'black_cat.png'), (2, 'Dark Pumpkin', 'dark_pumpkin.png'), (3, 'Frankenstein', 'frankenstein.png'), (4, 'Ghost', 'ghost.png'), (5, 'Green Demon', 'green_demon.png'), (6, 'Marsian', 'green_marsian.png'), (7, 'Green Pumpkin', 'green_pumpkin.png'), (8, 'Puke', 'head_puke.png'), (9, 'Little Bat', 'little_bat.png'), (10, 'Vampire', 'little_vmapire.png'), (11, 'Love Pumpkin', 'love_pumpkin.png'), (12, 'Momy', 'momy.png'), (13, 'Red demon', 'red_demon.png'), (14, 'Red head', 'red_head.png'), (15, 'Scary', 'scary_head.png'), (16, 'Pumpkin', 'smile_pumpkin.png'), (17, 'Star Pumpkin', 'star_pumpkin.png'), (18, 'Eye', 'the_eye.png'), (19, 'Skull', 'the_skull.png'), (20, 'Wolf', 'the_wolf.png');
+INSERT INTO `origins_digital`.`avatar` VALUES
+(1, 'Black Cat', 'black_cat.png'), 
+(2, 'Dark Pumpkin', 'dark_pumpkin.png'), 
+(3, 'Frankenstein', 'frankenstein.png'), 
+(4, 'Ghost', 'ghost.png'), 
+(5, 'Green Demon', 'green_demon.png'), 
+(6, 'Marsian', 'green_marsian.png'), 
+(7, 'Green Pumpkin', 'green_pumpkin.png'), 
+(8, 'Puke', 'head_puke.png'), 
+(9, 'Little Bat', 'little_bat.png'), 
+(10, 'Vampire', 'little_vmapire.png'), 
+(11, 'Love Pumpkin', 'love_pumpkin.png'), 
+(12, 'Momy', 'momy.png'), 
+(13, 'Red demon', 'red_demon.png'), 
+(14, 'Red head', 'red_head.png'), 
+(15, 'Scary', 'scary_head.png'), 
+(16, 'Pumpkin', 'smile_pumpkin.png'), 
+(17, 'Star Pumpkin', 'star_pumpkin.png'), 
+(18, 'Eye', 'the_eye.png'), 
+(19, 'Skull', 'the_skull.png'), 
+(20, 'Wolf', 'the_wolf.png');
 
 
 -- -----------------------------------------------------
@@ -44,7 +63,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4;
 
-INSERT INTO `category` VALUES
+INSERT INTO `origins_digital`.`category` VALUES
 (1, 'HTML', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/640px-HTML5_logo_and_wordmark.svg.png'),
 (2, 'React', 'https://web-id.fr/storage/logos%2FReact_logo_wordmark.png'),
 (3, 'JavaScript', 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png'),
@@ -107,7 +126,7 @@ ALTER TABLE `origins_digital`.`video`
 CHANGE COLUMN `likes` `likes` INT UNSIGNED NOT NULL DEFAULT '0' ,
 CHANGE COLUMN `dislikes` `dislikes` INT UNSIGNED NOT NULL DEFAULT '0' ;
 
-INSERT INTO video VALUES
+INSERT INTO `origins_digital`.`video` VALUES
 (1, 'What Is ReactJS ?',"In this React js Tutorial video, we learn all about ReactJS, it's features and some basic concepts required to build a React Application.", 'https://i.ytimg.com/vi/Y6aYx_KKM7A/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLD5mNY27Tb_awlkrSyKCoLz2XBkQA', '00:09:29', TRUE, 2, 0, 0, 'Simplilearn', 'https://www.youtube.com/watch?v=Y6aYx_KKM7A'),
 (2, 'What Is Javascript ?', 'What is JavaScript? This short video explains it in 5 minutes.', 'https://i.ytimg.com/vi/upDLs1sn7g4/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLCFv9L3db-LCm6514So6r8E0-0cpg', '00:05:11', TRUE, 3, 0, 0, 'Programming with Mosh', 'https://www.youtube.com/watch?v=upDLs1sn7g4'),
 (3, 'What Is Node ?', "What is Node? What is Node used for? Why should you learn this popular JavaScript runtime? We'll get you caught up in under 2 minutes.", 'https://i.ytimg.com/vi/ATCs2BY-acA/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBpmNuo1CrYxd8JCzsrJ_tbfdqpAA', '00:02:34', TRUE, 5, 0, 0, 'Zero to mastery', 'https://www.youtube.com/watch?v=ATCs2BY-acA'),
@@ -235,7 +254,7 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 51
 DEFAULT CHARACTER SET = utf8mb4;
 
-INSERT INTO `tags` VALUES
+INSERT INTO `origins_digital`.`tags` VALUES
 (1, 'frontend'),
 (2, 'backend'),
 (3, 'html'),
@@ -304,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `origins_digital`.`video_tags` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
 
-INSERT INTO video_tags VALUES 
+INSERT INTO `origins_digital`.`video_tags` VALUES 
 (1, 1), (1, 5), (1, 9), (1, 12), (2, 5), (2, 13), (2, 26), (2, 29), (3, 19), (3, 5), (3, 23), (3, 46), (4, 4), (4, 1), (4, 20), (4, 24), (5, 5), (5, 6), (5, 36), (5, 28), (6, 9), (6, 12), (6, 13), (6, 15), (7, 2), (7, 7), (7, 3), (7, 45), (8, 5), (8, 13), (8, 28), (8, 36), (9, 17), (9, 30), (9, 1), (9, 13), (10, 48), (10, 11), (10, 36), (10, 8), (11, 27), (11, 5), (11, 45), (11, 33), (12, 5), (12, 36), (12, 13), (12, 28), (13, 12), (13, 32), (13, 31), (13, 9), (14, 12), (14, 10), (14, 19), (14, 23), (15, 12), (15, 21), (15, 28), (15, 13), (16, 25), (16, 1), (16, 4), (16, 26), (17, 4), (17, 24), (17, 1), (17, 20), (18, 1), (18, 4), (18, 20), (18, 25), (19, 4), (19, 1), (19, 20), (19, 25), (20, 19), (20, 23), (20, 36), (20, 40), (21, 19), (21, 2), (21, 18), (21, 23), (22, 19), (22, 2),  (22, 18),  (22, 23),  (23, 19), (23, 2),  (23, 18),  (23, 23),  (24, 19), (24, 2),  (24, 5),  (24, 23),  (25, 21), (25, 5), (25, 22), (25, 13), (26, 12), (26, 31), (26, 32), (26, 13), (27, 17), (27, 13), (27, 28), (27, 26), (28, 17), (28, 13), (28, 28), (28, 26), (29, 39), (29, 13), (29, 28), (29, 26), (30, 39), (30, 13), (30, 28), (30, 30), (31, 39), (31, 13), (31, 28), (31, 30), (32, 7), (32, 13),(32, 26), (32, 36), (33, 7), (33, 13), (33, 26), (33, 36), (34, 7), (34, 13), (34, 26), (34, 45), (35, 7), (35, 27), (35, 13), (35, 45), (36, 7), (36, 29), (36, 13), (36, 32);
 
 
