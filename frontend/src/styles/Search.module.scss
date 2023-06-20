@@ -73,6 +73,14 @@
   width: min-content;
 }
 
+.thumbnails.no-videos-found {
+  display: flex;
+  width: 80vw;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 .thumbnails {
   a {
     img {
@@ -116,6 +124,13 @@
     margin-bottom: 0;
     overflow: hidden;
     width: min-content;
+  }
+
+  .thumbnails.no-videos-found {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
   }
 
   .browse {

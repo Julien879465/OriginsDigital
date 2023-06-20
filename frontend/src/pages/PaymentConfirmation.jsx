@@ -8,7 +8,7 @@ function PaymentConfirmation() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigate("/");
-    }, 10000);
+    }, 6000);
     return () => {
       clearTimeout(timeout);
     };
